@@ -43,8 +43,9 @@ RUN apt-get update && \
                     xvfb && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV DEBIAN_FRONTEND="noninteractive" \
-    LANG="en_US.UTF-8" \
+ARG DEBIAN_FRONTEND="noninteractive"
+
+ENV LANG="en_US.UTF-8" \
     LC_ALL="en_US.UTF-8"
 
 # Installing freesurfer
