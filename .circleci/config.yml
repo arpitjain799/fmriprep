@@ -218,6 +218,24 @@ jobs:
               echo "$DOCKER_PAT" | docker login -u $DOCKER_USER --password-stdin
             fi
       - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
+      - run:
           name: Run fMRIPrep tests
           no_output_timeout: 2h
           command: |
@@ -316,6 +334,24 @@ jobs:
             mkdir -p /tmp/${DATASET}/derivatives
             pip install --upgrade pip setuptools
             pip install --upgrade /tmp/src/fmriprep/wrapper/
+      - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
       - run:
           name: Run anatomical workflow on ds005
           no_output_timeout: 2h
@@ -536,6 +572,24 @@ jobs:
             pip install --upgrade pip setuptools
             pip install --upgrade /tmp/src/fmriprep/wrapper/
       - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
+      - run:
           name: Run anatomical workflow on ds054
           no_output_timeout: 2h
           command: |
@@ -677,6 +731,24 @@ jobs:
             pip install --upgrade pip setuptools
             pip install --upgrade /tmp/src/fmriprep/wrapper/
       - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
+      - run:
           name: Run anatomical workflow on ds000210
           no_output_timeout: 2h
           command: |
@@ -784,6 +856,24 @@ jobs:
               echo "$DOCKER_PAT" | docker login -u $DOCKER_USER --password-stdin
             fi
       - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
+      - run:
           name: Deploy to Docker Hub
           no_output_timeout: 40m
           command: |
@@ -816,6 +906,24 @@ jobs:
             if [[ -n $DOCKER_PAT ]]; then
               echo "$DOCKER_PAT" | docker login -u $DOCKER_USER --password-stdin
             fi
+      - run:
+          name: Build docker (should be cached from before)
+          command: |
+            pushd /home/circleci/src/fmriprep/
+            THISVERSION=$( python3 get_version.py )
+            if [[ ${THISVERSION:0:1} == "0" ]] ; then
+              echo "WARNING: latest git tag could not be found"
+              echo "Please, make sure you fetch all tags from upstream with"
+              echo "the command ``git fetch --tags --verbose`` and push"
+              echo "them to your fork with ``git push origin --tags``"
+            fi
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/fmriprep_docker.py
+            sed -i "s/title = {FMRIPrep}/title = {FMRIPrep ${CIRCLE_TAG:-$THISVERSION}}/" fmriprep/data/boilerplate.bib
+            # Build docker image
+            docker build -t nipreps/fmriprep:latest \
+              --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+              --build-arg VCS_REF=`git rev-parse --short HEAD` \
+              --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" .
       - run:
           name: Deploy to Docker Hub
           no_output_timeout: 40m
