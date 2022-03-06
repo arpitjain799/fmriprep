@@ -25,6 +25,12 @@
 # Use Ubuntu 20.04 LTS
 FROM ubuntu:focal-20210416
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends apt-utils && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ARG DEBIAN_FRONTEND="noninteractive"
+
 # Prepare environment
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -36,17 +42,15 @@ RUN apt-get update && \
                     curl \
                     git \
                     libtool \
+                    locales \
                     lsb-release \
                     netbase \
                     pkg-config \
                     unzip \
                     xvfb && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-ARG DEBIAN_FRONTEND="noninteractive"
-
-ENV LANG="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8"
+RUN locale-gen "en_US.UTF-8" && \
+    update-locale LANG=en_US.UTF-8 LC_MESSAGES=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 # Installing freesurfer
 RUN curl -sSL https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.1/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.1.tar.gz \
@@ -191,9 +195,8 @@ RUN apt-get update -qq \
            libglw1-mesa \
            libgomp1 \
            libjpeg62 \
-           libpng \
+           libpng16-16 \
            libxm4 \
-           libxp6 \
            netpbm \
            tcsh \
            xfonts-base \
