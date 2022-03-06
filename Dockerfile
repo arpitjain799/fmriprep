@@ -191,22 +191,15 @@ RUN apt-get update -qq \
            libglw1-mesa \
            libgomp1 \
            libjpeg62 \
+           libpng \
            libxm4 \
+           libxp6 \
            netpbm \
            tcsh \
            xfonts-base \
            xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -sSL --retry 5 -o /tmp/multiarch.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.2_amd64.deb \
-    && dpkg -i /tmp/multiarch.deb \
-    && rm /tmp/multiarch.deb \
-    && curl -sSL --retry 5 -o /tmp/libxp6.deb http://mirrors.kernel.org/debian/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb \
-    && dpkg -i /tmp/libxp6.deb \
-    && rm /tmp/libxp6.deb \
-    && curl -sSL --retry 5 -o /tmp/libpng.deb http://snapshot.debian.org/archive/debian-security/20160113T213056Z/pool/updates/main/libp/libpng/libpng12-0_1.2.49-1%2Bdeb7u2_amd64.deb \
-    && dpkg -i /tmp/libpng.deb \
-    && rm /tmp/libpng.deb \
     && apt-get install -f \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
